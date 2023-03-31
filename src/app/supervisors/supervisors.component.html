@@ -1,0 +1,75 @@
+<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
+<div class="title-button">
+  <h1>Supervisors</h1>
+  <button [cModalToggle]="scrollableLongContentModal.id"  cButton size="lg" ><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Register Supervisor</button>
+</div>
+
+<c-modal #scrollableLongContentModal id="scrollableLongContentModal" alignment="center" scrollable>
+  <c-modal-header>
+    <h5 cModalTitle>Register Supervisor</h5>
+    <button [cModalToggle]="scrollableLongContentModal.id" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="form" (ngSubmit)="onSubmit()">
+  <c-modal-body>
+    <ng-container>
+      <div class="form-group" >
+        <label for="fullname">Fullname</label>
+        <input type="text" formControlName="fullname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }" />
+        <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
+            <div *ngIf="f.fullname.errors.required">Fullname is required</div>
+        </div>
+    </div>
+    <div class="form-group" >
+        <label for="email">Email</label>
+        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+            <div *ngIf="f.email.errors.pattern">Email must contains @mail.com</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
+        </div>
+    </div>
+    <div class="form-group" >
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.pattern">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</div>
+        </div>
+    </div>
+
+    </ng-container>
+  </c-modal-body>
+  <c-modal-footer>
+    <button cButton color="secondary" id="closeBtn">
+      Close
+    </button>
+    <button cButton color="primary" type="submit" id="saveBtn">Save changes</button>
+  </c-modal-footer>
+</form>
+</c-modal>
+
+<table class="table table-striped"  >
+  <thead>
+      <tr>
+          <th style="width: 20%">Employee ID</th>
+          <th style="width: 20%">Full Name</th>
+          <th style="width: 20%">Position</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let employee of supervisors">
+          <td *ngIf="employee.position == 'Supervisor'">{{employee.username}}</td>
+          <td *ngIf="employee.position == 'Supervisor'">{{employee.fullname}}</td>
+          <td *ngIf="employee.position == 'Supervisor'"> Supervisor</td>
+      </tr>
+  </tbody>
+</table>

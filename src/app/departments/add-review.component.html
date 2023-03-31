@@ -1,0 +1,40 @@
+﻿<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
+<h1 *ngIf="isAddMode">Add User</h1>
+<h1 *ngIf="!isAddMode">Edit User</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="form-group col">
+            <label for="reviewStatus">First Name</label>
+            <input type="text" formControlName="reviewStatus" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.reviewStatus.errors }" />
+            <div *ngIf="submitted && f.reviewStatus.errors" class="invalid-feedback">
+                <div *ngIf="f.reviewStatus.errors.required">First Name is required</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label for="reviewDate">Last Name</label>
+            <input type="text" formControlName="reviewDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.reviewDate.errors }" />
+            <div *ngIf="submitted && f.reviewDate.errors" class="invalid-feedback">
+                <div *ngIf="f.reviewDate.errors.required">Last Name is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col">
+            <label for="remarks">remarks</label>
+            <input type="text" formControlName="remarks" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.remarks.errors }" />
+            <div *ngIf="submitted && f.remarks.errors" class="invalid-feedback">
+                <div *ngIf="f.remarks.errors.required">remarks is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <a routerLink="/users" class="btn btn-link">Cancel</a>
+    </div>
+</form>

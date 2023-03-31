@@ -1,0 +1,24 @@
+<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
+<h1>Employees</h1>
+<h3 *ngIf="users?.length == 1" class="space">There is no employees in the system!</h3>
+<!-- <a routerLink="add" class="btn btn-sm btn-success mb-2">Add User</a> -->
+<table class="table table-striped">
+    <thead>
+        <tr *ngIf="users.length >1 ">
+            <th style="width: 20%">Employee ID</th>
+            <th style="width: 20%">Fullname</th>
+            <th style="width: 30%">Supervised By</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employee of users">
+          <td *ngIf="employee.role == 'Employee'">{{employee.username}}</td>
+          <td *ngIf="employee.role == 'Employee'">{{employee.fullname}}</td>
+          <td *ngIf="employee.role == 'Employee' && employee.position == 'Supervisor'" >employee.username</td>
+        </tr>
+
+    </tbody>
+</table>

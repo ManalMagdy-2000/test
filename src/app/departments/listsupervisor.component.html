@@ -1,0 +1,129 @@
+<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
+<div class="title-button">
+  <h1>Supervisors </h1>
+</div>
+<h3 *ngIf="employees?.length == 1" class="space">No  employees assigned to any department yet!</h3>
+<c-accordion *ngFor="let employee of employees"   >
+    <c-accordion-item style="margin: 1rem 0;" #item0="cAccordionItem" [visible]="false" *ngIf="employee.role != 'HRAdmin'">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+          <div class="stats"  >
+          <h5 style="margin: 0 1rem;"><c-badge color="dark">Username: {{ employee.username }}</c-badge></h5>
+          <h5 style="margin: 0 1rem"><c-badge color="dark"> Full Name : {{ employee.fullname}}</c-badge></h5>
+          <h5 style="margin: 0 1rem">
+            <c-badge *ngIf="employee.supervisors?.length == 0" color="light" shape="rounded-pill">{{ employee.supervisors?.length }}</c-badge>
+            <c-badge *ngIf="employee.supervisors?.length > 0" color="success" shape="rounded-pill">{{ employee.supervisors?.length }}</c-badge>
+          </h5>
+        </div>
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body" style="padding: 0;">
+          <table
+          [hover]="false"
+          [responsive]="true"
+          [striped]="false"
+          cAlign="middle"
+          cTable
+          class="mb-0"
+        >
+                    <thead *ngIf="employee.supervisors?.length != 0">
+                      <tr>
+                        <th scope="col" style="width: 16%">Username</th>
+                        <th scope="col" style="width: 16%">Fullname</th>
+                        <th scope="col" style="width: 16%">Email</th>
+                        <th scope="col" style="width: 16%">Position</th>
+                        <th scope="col" style="width: 16%">Password</th>
+                        <th scope="col" style="width: 16%"></th>
+
+                        <!-- <th scope="col" style="width: 15%">Action</th> -->
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <td colSpan="7" *ngIf="employee.supervisors?.length == 0">
+                          <h5 id="departmentErrMsg" class="infotext">No Supervisors has been assigned yet!</h5>
+                        </td>
+                    <tr *ngFor="let Supervisor of employee.supervisors">
+                      <ng-container>
+                        <td>{{Supervisor.username}}</td>
+                        <td>{{Supervisor.fullname}}</td>
+                        <td >{{Supervisor.email}}</td>
+                        <td>{{Supervisor.position}}</td>
+                        <td>{{Supervisor.password}}</td>
+                        <!-- <td><button [cModalToggle]="addEmployee.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Review</button></td> -->
+                  </ng-container>
+                  </tr>
+                  <tr>
+                    <td align="center" colSpan="7">
+                      <button [cModalToggle]="addSupervisor.id" cButton size="lg" (click)="setID(employee.username)"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Supervisor</button>
+                    </td>
+                  </tr>
+                </tbody>
+                </table>
+        </div>
+      </ng-template>
+    </c-accordion-item>
+  </c-accordion>
+
+
+<c-modal #addSupervisor id="addSupervisor" alignment="center" scrollable>
+  <c-modal-header>
+    <h5 cModalTitle >Add Supervisor </h5>
+    <button [cModalToggle]="addSupervisor.id" cButtonClose></button>
+  </c-modal-header>
+  <form cForm [formGroup]="form2" (ngSubmit)= "onSubmit2()" >
+  <c-modal-body>
+    <ng-container>
+
+      <div class="form-group" >
+        <label for="fullname">Fullname</label>
+        <input type="text" formControlName="fullname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.fullname.errors }" />
+        <div *ngIf="submitted && f2.fullname.errors" class="invalid-feedback">
+            <div *ngIf="f2.fullname.errors.required">Fullname is required</div>
+        </div>
+    </div>
+    <div class="form-group" >
+        <label for="email">Email</label>
+        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.email.errors }" />
+        <div *ngIf="submitted && f2.email.errors" class="invalid-feedback">
+            <div *ngIf="f2.email.errors.required">Email is required</div>
+            <div *ngIf="f2.email.errors.pattern">Email must contains @mail.com</div>
+        </div>
+    </div>
+    <div class="form-group" >
+        <label for="username">Username</label>
+        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.username.errors }" />
+        <div *ngIf="submitted && f2.username.errors" class="invalid-feedback">
+            <div *ngIf="f2.username.errors.required">Username is required</div>
+        </div>
+    </div>
+    <div class="form-group" >
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.password.errors }" />
+        <div *ngIf="submitted && f2.password.errors" class="invalid-feedback">
+            <div *ngIf="f2.password.errors.required">Password is required</div>
+            <div *ngIf="f2.password.errors.pattern">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</div>
+        </div>
+    </div>
+
+    <div class="form-group" >
+      <label for="position">Position</label>
+      <input type="text" formControlName="position" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.position.errors }" />
+      <div *ngIf="submitted && f2.position.errors" class="invalid-feedback">
+          <div *ngIf="f2.position.errors.required">Position is required</div>
+      </div>
+  </div>
+
+    </ng-container>
+  </c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="addSupervisor.id" cButton color="secondary" id="closeBtn " (click)="reset()">
+      Close
+    </button>
+    <button cButton color="primary" type="submit" id="saveBtn" data-dismiss="addSupervisor.id" >Save changes</button>
+  </c-modal-footer>
+</form>
+</c-modal>

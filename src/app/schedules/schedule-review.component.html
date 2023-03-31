@@ -1,0 +1,95 @@
+﻿<div class="title-button">
+    <h1>Schedules </h1>
+    <form [formGroup]="form2" (ngSubmit)="checkDate()">
+<div class="form-group" style="display: flex;">
+    
+    <input type="date" style="width: auto; margin-right: 1rem;" formControlName="date" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.date.errors }" />
+    <div *ngIf="submitted && f2.date.errors" class="invalid-feedback">
+        <div *ngIf="f2.date.errors.required">date is required</div>
+    </div>
+    <button cButton type="submit" size="lg" id="regDepartment">Search</button>
+</div>
+</form>
+  </div>
+
+  <h3 *ngIf="selectedSchedule === null" class="space">There is no schedules in the system!</h3>
+
+
+<div *ngIf="selectedSchedule != null">
+  <table
+          [hover]="false"
+          [responsive]="true"
+          [striped]="false"
+          cAlign="middle"
+          cTable
+          class="mb-0"
+        >
+                    <thead>
+                      <tr>
+                        <th scope="col" style="width: 16%">Date</th>
+                        <th scope="col" style="width: 16%">Hours</th>
+                        <th scope="col" style="width: 16%">Location</th>
+                        <th scope="col" style="width: 16%">Report</th>
+                        <th scope="col" style="width: 16%">Comments</th>
+
+                        <!-- <th scope="col" style="width: 15%">Action</th> -->
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let schedule of schedules">
+                          <ng-container *ngIf="schedule.date === selectedSchedule">
+                        <td>{{schedule.date}}</td>
+                        <td>{{schedule.workHours}}</td>
+                        <td>{{schedule.workLocation}}</td>
+                        <td>{{schedule.workReport}}</td>
+                        <td *ngIf="schedule.supervisorComments != ''">{{schedule.supervisorComments}}</td>
+                        <td *ngIf="schedule.supervisorComments == ''"><button  class="btn btn-sm btn-primary mr-1" cButton >Comment</button></td>
+                          </ng-container>
+                        </tr>
+                </tbody>
+                </table>
+</div>
+
+<c-modal #scrollableLongContentModal id="scrollableLongContentModal" alignment="center" scrollable>
+    <c-modal-header>
+      <h5 cModalTitle>Register Department</h5>
+      <button [cModalToggle]="scrollableLongContentModal.id" cButtonClose></button>
+    </c-modal-header>
+    <form cForm [formGroup]="form" (ngSubmit)="onSubmit()">
+    <c-modal-body>
+      <ng-container>
+
+            <div class="form-group col">
+                <label for="workHours">Email</label>
+                <select aria-label="Large select example" formControlName="workHours" cSelect class="form-control mb-3" sizing="lg">
+                    <option>Open this select menu</option>
+                    <option value="5pm-10pm">5pm-10pm</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+            </div>
+            <div class="form-group col">
+                <label for="workLocation">Email</label>
+                <input type="text" formControlName="workLocation" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.workLocation.errors }" />
+                <div *ngIf="submitted && f.workLocation.errors" class="invalid-feedback">
+                    <div *ngIf="f.workLocation.errors.required">Email is required</div>
+                </div>
+            </div>
+
+        <div class="form-group col">
+        <div class="mb-3">
+            <label cLabel for="exampleFormControlTextarea1">Example textarea</label>
+            <textarea cFormControl formControlName="workReport" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+        </div>
+  
+      </ng-container>
+    </c-modal-body>
+    <c-modal-footer>
+      <button [cModalToggle]="" cButton color="secondary" id="closeBtn">
+        Close
+      </button>
+      <button cButton color="primary" type="submit" id="saveBtn">Save changes</button>
+    </c-modal-footer>
+  </form>
+  </c-modal>

@@ -1,0 +1,42 @@
+﻿<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
+<div class="p-4">
+    <div class="container">
+
+
+        <c-container fluid>
+            <h1>Hi, {{user.fullname}}!</h1>
+          <h5>Welcome To Flex Information System</h5><br><br>
+          <h1 *ngIf="!isEmployee">Departments Stats <c-badge color="success" shape="rounded-pill">{{statsArray.length}}</c-badge></h1>
+            <c-row [xs]="1" [lg]="3">
+              <c-col *ngFor="let stats of statsArray">
+                <c-card id="info" class="u-border u-border--bottom-right">
+                    <c-card-body>
+                        <h5 cCardTitle id="info">{{stats.stats.name}} [{{stats.id}}]</h5>
+                        <p cCardText style="color: lightgrey;">
+                         Employees:  <c-badge color="success" shape="rounded-pill">{{stats.stats.employees}}</c-badge> employees <br>
+                         Requests: <c-badge color="success" shape="rounded-pill">{{stats.stats.requests}}</c-badge> requests <br>
+                         - Flexi Hours: <c-badge color="success" shape="rounded-pill">{{stats.stats.flexi}}</c-badge> requests <br>
+                         - Work From Home: <c-badge color="success" shape="rounded-pill">{{stats.stats.wfh}}</c-badge> requests <br>
+                         - Hybrid: <c-badge color="success" shape="rounded-pill">{{stats.stats.hybrid}}</c-badge> requests <br>
+                         Daily Schedules: <c-badge color="success" shape="rounded-pill">{{stats.stats.schedules}}</c-badge> schedules <br>
+                         - Date Range: <c-badge color="success" shape="rounded-pill">{{stats.stats.earliestDate}}</c-badge> - <c-badge color="success" shape="rounded-pill">{{stats.stats.latestDate}}</c-badge> <br>
+                         <ng-container *ngFor="let work of stats.stats.workHoursCount">
+                            * {{work.workHour}}: <c-badge color="success" shape="rounded-pill">{{work.count}}</c-badge> schedules <br>
+                         </ng-container>
+                        </p>
+                    </c-card-body>
+                </c-card>
+              </c-col>
+            </c-row>
+          </c-container>
+
+
+        <!-- <h3 *ngIf="isEmployee">Position: {{user.position}}!</h3>
+        <h3 *ngIf="isEmployee">Department: {{department.name}}!</h3>
+
+        <p><button cButton (click)="logout()" color="primary" style="color: white;">Log out</button></p>        -->
+    </div>
+</div>
